@@ -3,38 +3,58 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Threading;
 
 namespace ConsoleApplication134
 {
     using System.Threading;
-
+    /// <summary>
+    /// Первый консольный графический движок
+    /// </summary>
     class Program
 
-    { 
+    {
         static void Main(string[] args)
         {
-            
+
             var shapes = new List<Shape>();
 
-                shapes.Add(new Star(5, 5, ConsoleColor.White));            
-                shapes.Add(new AnyStar(5, 5, ConsoleColor.Cyan, ConsoleColor.Gray));
+            shapes.Add(new Star(5, 5, ConsoleColor.White));
+
+            shapes.Add(new AnyStar(5, 5, ConsoleColor.Cyan, ConsoleColor.Gray));
 
             while (true)
             {
 
                 Engine.Draw(shapes);
+
             }
-              
+
         }
     }
 
     /// <summary>
-    /// Класс объединяющий методы в которых картинки для анимации, а также иные методы для работы с ними
+    /// Класс под картинки
+    /// </summary>
+    public static class Picture
+    {
+        /// <summary>
+        /// Первая картинка
+        /// </summary>
+        public static void Picture1()
+        {
+            Console.WriteLine("*******");
+        }
+
+    }
+
+    /// <summary>
+    /// Класс для работы с картинками
     /// </summary>
     static class Engine
     {
         /// <summary>
-        /// Метод очищает консоль
+        /// Очистка консоли
         /// </summary>
         public static void Clean()
         {
@@ -42,76 +62,20 @@ namespace ConsoleApplication134
         }
 
         /// <summary>
-        /// Первая картинка
+        /// Метод принимает координаты и ставит по умолчанию цвет консоли
         /// </summary>
-        /// <param name="x">координаты x</param>
-        /// <param name="y">координаты y</param>
-        /// <param name="color">Цвет</param>
+        /// <param name="x">х</param>
+        /// <param name="y">у</param>
+        /// <param name="color">цвет</param>
         public static void SetPixel(int x, int y, ConsoleColor color = ConsoleColor.DarkBlue)
         {
             Console.SetCursorPosition(x, y);
             Console.ForegroundColor = color;
-            Console.Write(@" 
-            ████████████████████████████████████╔═════════════════════╗
-            ███████░░░██████████████████████████║░░░░░░░░░░░░░░░░░░░░░║
-            ███████░░░░███████████████████▀░░▀██║░░░░░░░░░░░░░░░░░░░░░║
-            ███████▄░░░███████████████████░░░░██║░░███████░░░███████░░║
-            ████████░░░░█████████████████░░░░▄██║░███░░░██░░███░░░███░║
-            ████████▄░░░▀███████████████▀░░░░███║░░███████░░░███████░░║
-            █████████░░░░███▀░░░██▀▀████░░░░▄███║░░░░░░░░░░░░░░░░░░░░░║
-            █████████▄░░░▀██░░░░█░░░░██▀░░░░████║░░░░░░░░░░░░░░░░░░░░░║
-            ██████████░░░░██░░░░█░░░░██░░░░░████║█░░░░░░░░░░░░░░░░░░░█║
-            █░░░░██████░░░░█░░░░█░░░░█░░░░░█████║█░░░░░█████████░░░░░█║
-            ██░░░░░██░░░░░░░░░░░░░░░░█░░░░██████║██░░█████░░░█████░░██║
-            ███░░░░░░░░░░░░░░░░░░░░░░█░░░ ██████║█████░░░░░░░░░░░█████║
-            ██████░░░░░░░░▄▄▄▄░░░░░░█░░░░░██████║██████░░░░█░░░░██████║
-            ████████░░░░░░░░░░▀▀█▀▀░░░░░░░██████║░███████████████████░║
-            █████████░░░░░░░░░░░█▄░░░░░░░███████║░███████████████████░║
-            █████████▄░░░░░░░░░░░█░░░░░░████████║░░█████████████████░░║
-            ██████████░░░░░░░░░░░▀░░░░░░████████║░░░███████████████░░░║
-            ███████████░░░░░░░░░░░░░░░░█████████║░░░░█████████████░░░░║
-            ███████████▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄██████████║░░░░░███████████░░░░░║
-            ████████████████████████████████████║░░░░░░░░█████░░░░░░░░║
-        ");
+            Picture.Picture1();
         }
 
         /// <summary>
-        /// Вторая картинка для анимации
-        /// </summary>
-        /// <param name="x">координаты х</param>
-        /// <param name="y">координаты у</param>
-        /// <param name="color">цвет</param>
-        public static void SetPixel2(int x, int y, ConsoleColor color = ConsoleColor.DarkBlue)
-        {
-            Console.SetCursorPosition(x, y);
-            Console.ForegroundColor = color;
-            Console.Write(@"                    
-            ████████████████████████████████████╔═════════════════════╗
-            ███████░░░██████████████████████████║░░░░░░░░░░░░░░░░░░░░░║
-            ███████░░░░███████████████████▀░░▀██║░░░░░░░░░░░░░░░░░░░░░║
-            ███████▄░░░███████████████████░░░░██║██████████░██████████║
-            ████████░░░░█████████████████░░░░▄██║░███████████████████░║
-            ████████▄░░░▀███████████████▀░░░░███║░░███████░░░███████░░║
-            █████████░░░░███▀░░░██▀▀████░░░░▄███║░░░█████░░░░░█████░░░║
-            █████████▄░░░▀██░░░░█░░░░██▀░░░░████║░░░░░░░░░░░░░░░░░░░░░║
-            ██████████░░░░██░░░░█░░░░██░░░░░████║█░░░░░░░░░░░░░░░░░░░█║
-            ███████████░░░░█░░░░█░░░░██░░░░█████║█░░░░░█████████░░░░░█║
-            ████████████▀▀▀▀▀▀▀▀█░░░░█░░░░░█████║██░░█████░░░█████░░██║
-            ███████████░░░░░░░░░░█░░░█░░░░▄█████║█████░░░░░░░░░░░█████║
-            █████████▀░░░░▄▄▄▄░▄█░░░█░░░░░██████║██████░░░░█░░░░██████║
-            ████████▀░░░░░░░░▀▀█▀▀▀▀░░░░░░██████║░███████████████████░║
-            █████████░░░░░░░░░░░█▄░░░░░░░░██████║░███████████████████░║
-            █████████▄░░░░░░░░░░░█░░░░░░░███████║░░█████████████████░░║
-            ██████████░░░░░░░░░░░▀░░░░░░▄███████║░░░███████████████░░░║
-            ███████████░░░░░░░░░░░░░░░░░████████║░░░░█████████████░░░░║
-            ███████████▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█████████║░░░░░███████████░░░░░║
-            ████████████████████████████████████║░░░░░░░░█████░░░░░░░░║
-
-        ");
-        }
-
-        /// <summary>
-        /// метод очищает консоль а также переносит символы в массив List<> имеет таймер
+        /// Добавление символов в lis<>
         /// </summary>
         /// <param name="shapes"></param>
         public static void Draw(List<Shape> shapes)
@@ -127,7 +91,7 @@ namespace ConsoleApplication134
     }
 
     /// <summary>
-    /// абстрактный класс передающий x и у
+    /// Абстрактный класс должен принимать Х и У
     /// </summary>
     abstract class Shape
     {
@@ -145,7 +109,7 @@ namespace ConsoleApplication134
     }
 
     /// <summary>
-    /// Класс 
+    /// Первый вариант реализации картинок
     /// </summary>
     class Star : Shape
     {
@@ -157,30 +121,38 @@ namespace ConsoleApplication134
 
         public ConsoleColor Color { get; set; }
 
+        /// <summary>
+        /// Моя реализация движение объектов на консоли
+        /// </summary>
         public override void Draw()
         {
 
-                Engine.SetPixel(X , Y, this.Color);
-                Engine.SetPixel(X, Y , this.Color);
-                Engine.SetPixel(X,  Y, this.Color);
+            for (int i = 0; i < 40; i++)
+            {
+                Engine.SetPixel(X + 5, Y + i, this.Color);
+                Engine.SetPixel(X + i, Y, this.Color);
+                Engine.SetPixel(X + 5 + i, Y + 8, this.Color);
+                Engine.SetPixel(X + i, Y + 4 + i, this.Color);
+                Engine.SetPixel(X + i, Y + i + 8, this.Color);
 
-            Thread.Sleep(500);
+                Thread.Sleep(100);
                 Engine.Clean();
+            }
         }
     }
 
     /// <summary>
-    /// Класс для второго метода реализации картинок
+    /// Второй вариант имеет два цвета .
     /// </summary>
     class AnyStar : Star
     {
         /// <summary>
-        /// Метод принимающий 2 цвета 
+        /// Принимает координаты Х и У имеет два цвета
         /// </summary>
-        /// <param name="x">координата х</param>
-        /// <param name="y">координата н</param>
+        /// <param name="x">х</param>
+        /// <param name="y">у</param>
         /// <param name="color1">цвет1</param>
-        /// <param name="color2">цвет2</param>
+        /// <param name="color2">цветц</param>
         public AnyStar(int x, int y, ConsoleColor color1, ConsoleColor color2)
             : base(x, y, color1)
         {
@@ -189,16 +161,16 @@ namespace ConsoleApplication134
         }
 
         /// <summary>
-        /// Реализация абстрактного класса измененный для перемены цвета а также возможно движение объекта
+        /// Движение на консоли данных объектов
         /// </summary>
         public override void Draw()
         {
             this.Color = (this.i++) % 2 == 0 ? this.color1 : this.color2;
             base.Draw();
-            for(int i=0;i<16;i++)
-            Engine.SetPixel2(X , Y , this.Color);
-            Engine.SetPixel2(X , Y , this.Color);
-            Engine.SetPixel2(i + X, Y, this.Color);
+
+            Engine.SetPixel(X, Y, this.Color);
+            Engine.SetPixel(X, Y, this.Color);
+            Engine.SetPixel(X, Y, this.Color);
 
             Thread.Sleep(500);
             Engine.Clean();
@@ -211,3 +183,4 @@ namespace ConsoleApplication134
         private ConsoleColor color2;
     }
 }
+
