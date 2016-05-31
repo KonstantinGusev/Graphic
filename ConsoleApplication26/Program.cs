@@ -21,7 +21,10 @@ namespace ConsoleApplication134
 
             shapes.Add(new Star(5, 5, ConsoleColor.White));
 
-            shapes.Add(new AnyStar(5, 5, ConsoleColor.Cyan, ConsoleColor.Gray));
+            shapes.Add(new AnyStar2(5, 5, ConsoleColor.Cyan, ConsoleColor.Gray));
+
+
+            Console.Clear();
 
             while (true)
             {
@@ -43,7 +46,45 @@ namespace ConsoleApplication134
         /// </summary>
         public static void Picture1()
         {
-            Console.WriteLine("*******");
+            Console.WriteLine("*");
+        }
+        public static void Picture2()
+        {
+            Console.WriteLine(@"
+*********    *********    *********    *********    *
+*********    *********    *********    *********    *
+*********    *********    *********    *********    *
+*********    *********    *********    *********    *
+*********
+*********
+*********    *********    *********    *********    
+             *********    *********    *********    *
+
+*********
+*********    ******************    ******************
+*********    ******************    ******************   
+*********    ******************                     *
+*********    ************************************   *
+*********
+*********                                           *
+*********    ****************************************
+*********    ***************************    *********
+             ***************************    *********
+
+*********   
+*********    ************************************
+*********    ************************************
+*********    ************************************
+                                                THE END             ");
+        }
+        public static void Picture3()
+        {
+            Console.WriteLine("/|\\");
+
+        }
+        public static void Picture4()
+        {
+            Console.WriteLine("/\\");
         }
 
     }
@@ -58,7 +99,8 @@ namespace ConsoleApplication134
         /// </summary>
         public static void Clean()
         {
-            Console.Clear();
+            Console.CursorVisible = false; // гасим курсор
+
         }
 
         /// <summary>
@@ -67,12 +109,78 @@ namespace ConsoleApplication134
         /// <param name="x">х</param>
         /// <param name="y">у</param>
         /// <param name="color">цвет</param>
-        public static void SetPixel(int x, int y, ConsoleColor color = ConsoleColor.DarkBlue)
+        public static void SetPixel1(int x, int y, ConsoleColor color = ConsoleColor.DarkBlue)
         {
-            Console.SetCursorPosition(x, y);
-            Console.ForegroundColor = color;
-            Picture.Picture1();
+
+            if (x > 0 & y > 0)
+            {
+                Console.SetCursorPosition(x, y);
+                Console.ForegroundColor = color;
+
+                Picture.Picture1();
+            }
+
+            else
+            {
+                Console.SetCursorPosition(x = 2, y = 2);
+                Console.ForegroundColor = color;
+                Picture.Picture1();
+                return;
+            }
+
+            Thread.Sleep(100);
         }
+
+
+        public static void SetPixel2(int x, int y, ConsoleColor color = ConsoleColor.DarkBlue)
+        {
+
+            
+                Console.SetCursorPosition(x, y);
+                Console.ForegroundColor = color;
+
+                Picture.Picture2();
+  
+            Thread.Sleep(100);
+        }
+        public static void SetPixel3(int x, int y, ConsoleColor color = ConsoleColor.DarkBlue)
+        {
+            if (x > 0 & y > 0)
+            {
+                Console.SetCursorPosition(x, y - 2);
+                Console.ForegroundColor = color;
+                Picture.Picture3();
+                Engine.Clean();
+            }
+            else
+            {
+                Console.SetCursorPosition(x = 3, y = 3);
+                Console.ForegroundColor = color;
+                Picture.Picture3();
+                return;
+            }
+            Thread.Sleep(100);
+        }
+        public static void SetPixel4(int x, int y, ConsoleColor color = ConsoleColor.DarkBlue)
+        {
+            if (x > 0 & y > 0)
+            {
+                Console.SetCursorPosition(x, y - 3);
+                Console.ForegroundColor = color;
+                Picture.Picture4();
+                Engine.Clean();
+            }
+            else
+            {
+                Console.SetCursorPosition(x = 4, y = 4);
+                Console.ForegroundColor = color;
+                Picture.Picture4();
+                return;
+            }
+        }
+
+
+
 
         /// <summary>
         /// Добавление символов в lis<>
@@ -126,20 +234,14 @@ namespace ConsoleApplication134
         /// </summary>
         public override void Draw()
         {
+            Engine.SetPixel2(X, Y, this.Color);
 
-            for (int i = 0; i < 40; i++)
-            {
-                Engine.SetPixel(X + 5, Y + i, this.Color);
-                Engine.SetPixel(X + i, Y, this.Color);
-                Engine.SetPixel(X + 5 + i, Y + 8, this.Color);
-                Engine.SetPixel(X + i, Y + 4 + i, this.Color);
-                Engine.SetPixel(X + i, Y + i + 8, this.Color);
+            Thread.Sleep(100);
+            Engine.Clean();
 
-                Thread.Sleep(100);
-                Engine.Clean();
-            }
         }
     }
+
 
     /// <summary>
     /// Второй вариант имеет два цвета .
@@ -168,12 +270,101 @@ namespace ConsoleApplication134
             this.Color = (this.i++) % 2 == 0 ? this.color1 : this.color2;
             base.Draw();
 
-            Engine.SetPixel(X, Y, this.Color);
-            Engine.SetPixel(X, Y, this.Color);
-            Engine.SetPixel(X, Y, this.Color);
+            Engine.SetPixel1(X, Y, this.Color);
 
-            Thread.Sleep(500);
+
+            Thread.Sleep(100);
             Engine.Clean();
+        }
+
+        private int i = 0;
+
+        private ConsoleColor color1;
+
+        private ConsoleColor color2;
+    }
+    /// <summary>
+    /// Второй вариант имеет два цвета .
+    /// </summary>
+    class AnyStar2 : AnyStar
+    {
+        ConsoleKeyInfo k;
+
+        /// <summary>
+        /// Принимает координаты Х и У имеет два цвета
+        /// </summary>
+        /// <param name="x">х</param>
+        /// <param name="y">у</param>
+        /// <param name="color1">цвет1</param>
+        /// <param name="color2">цветц</param>
+        public AnyStar2(int x, int y, ConsoleColor color1, ConsoleColor color2)
+            : base(x, y, color1, color2)
+
+        {
+            this.color1 = color1;
+            this.color2 = color2;
+        }
+
+        /// <summary>
+        /// Движение на консоли данных объектов
+        /// </summary>
+        public override void Draw()
+        {
+
+            
+
+
+                this.Color = (this.i++) % 2 == 0 ? this.color1 : this.color2;
+
+                k = Console.ReadKey(true);
+
+
+                if (k.Key == ConsoleKey.UpArrow)
+                {
+                    Y--;
+                    Engine.SetPixel4(X + 1, Y + 1, this.Color);
+                    Engine.SetPixel3(X + 1, Y - 1, this.Color);
+
+                    Engine.SetPixel1(X + 2, Y - 4, this.Color);
+
+                }
+
+                else if (k.Key == ConsoleKey.DownArrow)
+                {
+
+                    Y++;
+                    Engine.SetPixel4(X + 1, Y + 1, this.Color);
+                    Engine.SetPixel3(X + 1, Y - 1, this.Color);
+
+                    Engine.SetPixel1(X + 2, Y - 4, this.Color);
+
+                }
+
+
+                else if (k.Key == ConsoleKey.LeftArrow)
+                {
+                    X--;
+                    Engine.SetPixel4(X + 1, Y + 1, this.Color);
+                    Engine.SetPixel3(X + 1, Y - 1, this.Color);
+
+                    Engine.SetPixel1(X + 2, Y - 4, this.Color);
+
+                }
+                else if (k.Key == ConsoleKey.RightArrow)
+                {
+                    X++;
+                    Engine.SetPixel4(X + 2, Y + 1, this.Color);
+                    Engine.SetPixel3(X + 1, Y - 1, this.Color);
+
+                    Engine.SetPixel1(X + 2, Y - 4, this.Color);
+
+                }
+                Console.Clear();
+            
+
+
+       
+
         }
 
         private int i = 0;
@@ -184,3 +375,4 @@ namespace ConsoleApplication134
     }
 }
 
+    
